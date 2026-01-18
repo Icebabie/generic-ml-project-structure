@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Predict Diabetes</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 850px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #6ee7ff;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        input {
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        button {
+            grid-column: 1 / -1;
+            margin-top: 20px;
+            padding: 15px;
+            font-size: 1.1rem;
+            border-radius: 30px;
+            border: none;
+            background: #6ee7ff;
+            color: #003344;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #4fd1e6;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.3rem;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.12);
+        }
+
+        .positive {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #6bffb3;
+            font-weight: bold;
+        }
+
+        .back {
+            display: block;
+            margin-top: 25px;
+            text-align: center;
+            color: #b3ecff;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🩺 Diabetes Prediction</h2>
+
+    <form action= "{{ url_for('predict_datapoint')}}" method="POST">
+        <input name="Pregnancies" placeholder="Pregnancies" required>
+        <input name="Glucose" placeholder="Glucose Level" required>
+        <input name="BloodPressure" placeholder="Blood Pressure" required>
+        <input name="SkinThickness" placeholder="Skin Thickness" required>
+        <input name="Insulin" placeholder="Insulin" required>
+        <input name="BMI" placeholder="BMI" required>
+        <input name="DiabetesPedigreeFunction" placeholder="Pedigree Function" required>
+        <input name="Age" placeholder="Age" required>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction != "not_set" %}
+        <div class="result">
+            Prediction:
+            {% if prediction == 1 %}
+                <span class="positive">Diabetic</span>
+            {% else %}
+                <span class="negative">Not Diabetic</span>
+            {% endif %}
+        </div>
+    {% endif %}
+
+
+    <a href="/" class="back">← Back to Home</a>
+</div>
+
+</body>
+</html>
